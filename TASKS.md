@@ -24,7 +24,9 @@
 
 - [ ] **1. Pythonプロジェクト初期化**
   - `pyproject.toml`と依存関係（weasyprint, requests, python-dotenv, jinja2）を定義
-  - 受け入れ条件: `pip install -e .` が成功する
+  - black, mypyの設定を含める
+  - 型定義: 関数の引数と戻り値に型ヒントを付ける（内部変数は推論に任せる）
+  - 受け入れ条件: `pip install -e .` が成功する、`black --check .` が通る
 
 - [ ] **2. 環境変数管理のセットアップ**
   - `.env.example`ファイル作成、python-dotenvで読み込み
