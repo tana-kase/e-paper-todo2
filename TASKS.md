@@ -22,15 +22,15 @@
 
 ## フェーズ1: プロジェクト基盤
 
-- [ ] **1. Pythonプロジェクト初期化**
-  - `pyproject.toml`と依存関係（weasyprint, requests, python-dotenv, jinja2）を定義
+- [x] **1. Pythonプロジェクト初期化**
+  - `pyproject.toml`と依存関係（weasyprint, pymupdf, pillow, requests, python-dotenv, jinja2）を定義
   - black, mypyの設定を含める
   - 型定義: 関数の引数と戻り値に型ヒントを付ける（内部変数は推論に任せる）
   - 受け入れ条件: `pip install -e .` が成功する、`black --check .` が通る
 
-- [ ] **2. 環境変数管理のセットアップ**
+- [x] **2. 環境変数管理のセットアップ**
   - `.env.example`ファイル作成、python-dotenvで読み込み
-  - 受け入れ条件: テストコードで`TODOIST_API_TOKEN`環境変数が読み込める
+  - 受け入れ条件: テストコードで`API_KEY`環境変数が読み込める
 
 ---
 
