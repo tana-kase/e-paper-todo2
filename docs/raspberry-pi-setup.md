@@ -84,10 +84,10 @@ python -m src.wall_todo.main
 crontab -e
 ```
 
-以下を追加（15分ごとに実行）:
+以下を追加（毎分実行）:
 
 ```
-*/15 * * * * cd /home/pi/wall-todo && .venv/bin/python -m src.wall_todo.main >> /tmp/wall-todo.log 2>&1
+* * * * * cd /home/pi/wall-todo && .venv/bin/python -m src.wall_todo.main >> /tmp/wall-todo.log 2>&1
 ```
 
 ## 9. フォールバック画像の設定

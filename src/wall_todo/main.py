@@ -6,6 +6,7 @@ from pathlib import Path
 from .todoist import get_api_key, get_today_tasks
 from .renderer import render_board
 from .epaper import display_image
+from .convert import process_uploads
 
 OUTPUT_PATH = Path(__file__).parent.parent.parent / "output.png"
 
@@ -14,6 +15,11 @@ def main() -> None:
     """Fetch tasks from Todoist, generate PNG, and display on e-paper."""
     # Check for --no-display flag
     display_enabled = "--no-display" not in sys.argv
+
+    # Process any uploaded images first
+    converted = process_uploads()
+    if converted > 0:
+        print(f"Converted {converted} uploaded image(s)")
 
     api_key = get_api_key()
     if not api_key:

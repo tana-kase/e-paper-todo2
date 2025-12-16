@@ -1,12 +1,23 @@
 """E-paper display module for Waveshare 7.5inch V2."""
 
-import sys
+from datetime import datetime
 from pathlib import Path
+
 from PIL import Image
 
 # Display dimensions
 DISPLAY_WIDTH = 800
 DISPLAY_HEIGHT = 480
+
+
+def should_full_refresh() -> bool:
+    """
+    Determine if full refresh is needed (every 5 minutes).
+
+    Returns:
+        True if current minute is divisible by 5
+    """
+    return datetime.now().minute % 5 == 0
 
 
 def is_raspberry_pi() -> bool:
@@ -18,12 +29,15 @@ def is_raspberry_pi() -> bool:
         return False
 
 
-def display_image(image_path: str | Path) -> bool:
+def display_image(image_path: str | Path, force_full_refresh: bool = False) -> bool:
     """
     Display PNG image on e-paper.
 
+    Automatically performs full refresh every 5 minutes to prevent ghosting.
+
     Args:
         image_path: Path to PNG image (480x800)
+        force_full_refresh: Force full refresh regardless of time
 
     Returns:
         True if displayed successfully, False otherwise
@@ -33,8 +47,11 @@ def display_image(image_path: str | Path) -> bool:
         print(f"Error: Image not found: {image_path}")
         return False
 
+    full_refresh = force_full_refresh or should_full_refresh()
+
     if not is_raspberry_pi():
-        print(f"Not on Raspberry Pi. Would display: {image_path}")
+        refresh_type = "full refresh" if full_refresh else "partial"
+        print(f"Not on Raspberry Pi. Would display ({refresh_type}): {image_path}")
         return True
 
     try:
@@ -43,6 +60,11 @@ def display_image(image_path: str | Path) -> bool:
 
         epd = epd7in5_V2.EPD()
         epd.init()
+
+        # Full refresh to prevent ghosting (every 5 minutes)
+        if full_refresh:
+            epd.Clear()
+            print("Full refresh performed")
 
         # Load and rotate image (480x800 portrait -> 800x480 landscape for display)
         img = Image.open(image_path)
