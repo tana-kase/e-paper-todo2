@@ -25,6 +25,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   jq \
   nano \
   vim \
+  # Python and WeasyPrint dependencies
+  python3 \
+  python3-pip \
+  python3-venv \
+  libpango-1.0-0 \
+  libpangocairo-1.0-0 \
+  libgdk-pixbuf2.0-0 \
+  libffi-dev \
+  shared-mime-info \
+  fonts-noto-cjk \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Ensure default node user has access to /usr/local/share
