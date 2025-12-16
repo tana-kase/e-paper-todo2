@@ -19,6 +19,11 @@ dev = [
     "mypy>=1.8.0",
     "types-requests>=2.31.0",
 ]
+raspi = [
+    "waveshare-epaper>=1.0.0",
+    "RPi.GPIO>=0.7.0",
+    "spidev>=3.6",
+]
 
 [build-system]
 requires = ["setuptools>=68.0"]
