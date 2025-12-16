@@ -52,15 +52,3 @@ def get_today_tasks(api_key: str, limit: int = 10) -> list[dict]:
     """
     tasks = fetch_tasks(api_key, "today")
     return tasks[:limit]
-
-
-if __name__ == "__main__":
-    key = get_api_key()
-    if not key:
-        print("ERROR: API_KEY not set")
-        exit(1)
-
-    tasks = get_today_tasks(key)
-    print(f"Found {len(tasks)} tasks:")
-    for task in tasks:
-        print(f"  - {task.get('content', 'No content')}")

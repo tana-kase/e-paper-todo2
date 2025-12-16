@@ -38,17 +38,3 @@ def get_fallback_image(target_date: date | None = None) -> Path | None:
     index = hash_value % len(images)
 
     return images[index]
-
-
-if __name__ == "__main__":
-    from datetime import timedelta
-
-    print(f"Images directory: {IMAGES_DIR}")
-    print(f"Exists: {IMAGES_DIR.exists()}")
-
-    # Test with different dates
-    today = date.today()
-    for i in range(3):
-        d = today + timedelta(days=i)
-        img = get_fallback_image(d)
-        print(f"{d}: {img}")

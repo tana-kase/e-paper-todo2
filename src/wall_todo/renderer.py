@@ -86,17 +86,3 @@ def render_board(tasks: list[dict], output_path: str | Path) -> bool:
     html = render_html(tasks)
     html_to_png(html, output_path)
     return True
-
-
-if __name__ == "__main__":
-    # Test with dummy data
-    dummy_tasks = [
-        {"content": "買い物に行く"},
-        {"content": "日本語テスト：漢字・ひらがな・カタカナ"},
-        {"content": "これは30文字を超える非常に長いタスク名のテストです。省略されるはずです。"},
-    ]
-
-    output = Path(__file__).parent.parent.parent / "output.png"
-    print(f"Output path: {output}")
-    render_board(dummy_tasks, output)
-    print(f"Generated: {output}")
