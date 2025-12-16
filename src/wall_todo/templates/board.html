@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: 480px 800px;
+            margin: 0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Zen Kurenaido', 'Noto Serif CJK JP', serif;
+            font-size: 20px;
+            background: white;
+            width: 480px;
+            height: 800px;
+            padding: 32px;
+            padding-top: 48px;
+            position: relative;
+        }
+        .task {
+            border-bottom: 1px solid #ddd;
+            padding-top: 24px;
+            padding-bottom: 6px;
+            padding-left: 8px;
+            padding-right: 8px;
+            line-height: 1.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .task:last-child {
+            border-bottom: none;
+        }
+        .no-tasks {
+            text-align: center;
+            color: #666;
+            margin-top: 80px;
+            font-size: 20px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 24px;
+            right: 32px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    {% if tasks %}
+    {% for task in tasks %}
+    <div class="task">{{ task.content }}</div>
+    {% endfor %}
+    {% else %}
+    <p class="no-tasks">タスクはありません</p>
+    {% endif %}
+    <div class="footer">{{ updated_at }}</div>
+</body>
+</html>

@@ -12,6 +12,97 @@
 
 参考: [Makerguides - Partial Refresh of e-Paper Display](https://www.makerguides.com/partial-refresh-e-paper-display-esp32/)
 
+## ハードウェア仕様: Waveshare 7.5inch e-Paper HAT
+
+| 項目 | 仕様 |
+|------|------|
+| 解像度 | 800×480（縦長使用時: 480×800） |
+| グレースケール | 4階調（白・ライトグレー・ダークグレー・黒） |
+| 全画面更新 | 4秒 |
+| 部分更新 | 0.4秒 |
+| 4階調更新 | 2.1秒 |
+| 消費電力 | 26.4mW（待機時ほぼ0） |
+
+### 注意事項
+
+- 部分更新を繰り返すと残像（ゴースト）が悪化し、ディスプレイ損傷の可能性あり
+- 数回の部分更新後には全画面更新が必要（推奨: 5回に1回）
+- V2版（2023年9月以降販売）は `7.5V2` プログラムを使用
+
+### 処理時間見積もり
+
+```
+PNG生成（WeasyPrint）: 12.5秒
+e-Paper全画面更新:     4.0秒
+合計:                 約17秒 → 1分以内の要件を満たす ✅
+```
+
+### デザインへの影響
+
+4階調対応のため、グレー背景（#f5f5f5）は実機でライトグレーとして表示される。
+白黒2色ではないため、現在のデザインはそのまま使用可能。
+
+参考:
+- [Waveshare 7.5inch e-Paper HAT Manual](https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT_Manual)
+- [Waveshare 7.5inch e-Paper HAT Product Page](https://www.waveshare.com/7.5inch-e-paper-hat.htm)
+
+## 意思決定: フォント選定
+
+**決定: Zen Kurenaido を採用**
+
+### 比較したフォント
+
+| フォント | 特徴 | 評価 |
+|---------|------|------|
+| Noto Sans CJK JP | ゴシック、モダン | △ 冷たい印象 |
+| Noto Serif CJK JP | 明朝体、フォーマル | ○ 落ち着き |
+| **Zen Kurenaido** | 筆ペン風、手書き感 | ◎ 暖かみ |
+
+### 採用理由
+
+1. ウォルナット+暖色照明の空間に合う暖かみ
+2. 手書き感がありパーソナルな印象
+3. 可読性を保ちつつ柔らかい雰囲気
+
+### フォントファイル
+
+- `fonts/ZenKurenaido-Regular.ttf`
+- Google Fonts: https://fonts.google.com/specimen/Zen+Kurenaido
+- ライセンス: OFL (Open Font License)
+
+---
+
+## 意思決定: タスク表示の行数
+
+**決定: 1行強制（CSS `text-overflow: ellipsis`）**
+
+### 検証結果
+
+| パターン | 10件表示 | 問題 |
+|---------|---------|------|
+| 1行強制 | ✅ 余裕あり | なし |
+| 2行許容 | ⚠️ ギリギリ | 長いタスクが多いと窮屈 |
+| 3行許容 | ❌ 限界 | フッターと重なる |
+| 全部2行 | ❌ 溢れる | 8件目までしか表示されない |
+
+### 採用理由
+
+1. 10件表示を保証するため
+2. 整然とした見た目を維持
+3. タスク名が長い場合でもレイアウトが崩れない
+
+### CSS実装
+
+```css
+.task {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+```
+
+---
+
 ## 意思決定: HTML→PNG変換方式
 
 **決定: WeasyPrint + PyMuPDF + Pillow を採用**
