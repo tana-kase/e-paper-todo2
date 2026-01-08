@@ -80,7 +80,7 @@ sudo apt-get install -y \
 
 ```bash
 cd ~
-git clone https://github.com/<your-username>/e-paper-todo2.git wall-todo
+git clone https://github.com/tana-kase/e-paper-todo2 wall-todo
 cd wall-todo
 ```
 
