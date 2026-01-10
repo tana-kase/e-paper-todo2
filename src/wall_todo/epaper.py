@@ -57,7 +57,8 @@ def display_image(image_path: str | Path, force_full_refresh: bool = False) -> b
     try:
         # Import Waveshare library (only available on Raspberry Pi)
         import epaper
-        epd7in5_V2 = epaper.epaper('epd7in5_V2')
+
+        epd7in5_V2 = epaper.epaper("epd7in5_V2")
 
         epd = epd7in5_V2.EPD()
         epd.init()
@@ -100,7 +101,8 @@ def clear_display() -> bool:
 
     try:
         import epaper
-        epd7in5_V2 = epaper.epaper('epd7in5_V2')
+
+        epd7in5_V2 = epaper.epaper("epd7in5_V2")
 
         epd = epd7in5_V2.EPD()
         epd.init()

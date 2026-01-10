@@ -1,5 +1,6 @@
 """Main entry point for wall-todo."""
 
+import json
 import sys
 from pathlib import Path
 
@@ -9,6 +10,31 @@ from .epaper import display_image
 from .convert import process_uploads
 
 OUTPUT_PATH = Path(__file__).parent.parent.parent / "output.png"
+CACHE_PATH = Path(__file__).parent.parent.parent / ".tasks_cache.json"
+
+
+def load_cached_tasks() -> list[dict] | None:
+    """Load previously cached tasks from file."""
+    if not CACHE_PATH.exists():
+        return None
+    try:
+        with open(CACHE_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, IOError):
+        return None
+
+
+def save_tasks_cache(tasks: list[dict]) -> None:
+    """Save tasks to cache file."""
+    with open(CACHE_PATH, "w", encoding="utf-8") as f:
+        json.dump(tasks, f, ensure_ascii=False, indent=2)
+
+
+def tasks_changed(current_tasks: list[dict], cached_tasks: list[dict] | None) -> bool:
+    """Check if tasks have changed since last run."""
+    if cached_tasks is None:
+        return True
+    return current_tasks != cached_tasks
 
 
 def main() -> None:
@@ -27,6 +53,14 @@ def main() -> None:
         return
 
     tasks = get_today_tasks(api_key)
+
+    # Check if tasks have changed
+    cached_tasks = load_cached_tasks()
+    if not tasks_changed(tasks, cached_tasks):
+        print("タスクに変更なし。再描画をスキップ")
+        return
+
+    # Tasks have changed, render and display
     used_fallback = not render_board(tasks, OUTPUT_PATH)
 
     if used_fallback:
@@ -36,6 +70,9 @@ def main() -> None:
 
     if display_enabled:
         display_image(OUTPUT_PATH)
+
+    # Save tasks to cache
+    save_tasks_cache(tasks)
 
 
 if __name__ == "__main__":

@@ -13,6 +13,9 @@ build/
 *.png
 !images/*.png
 
+# Task cache
+.tasks_cache.json
+
 # OS files
 .DS_Store
 Thumbs.db

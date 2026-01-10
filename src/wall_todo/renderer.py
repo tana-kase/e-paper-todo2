@@ -2,10 +2,7 @@
 
 import io
 import shutil
-from datetime import datetime, timezone, timedelta
 from pathlib import Path
-
-JST = timezone(timedelta(hours=9))
 
 import fitz  # PyMuPDF
 from jinja2 import Environment, FileSystemLoader
@@ -19,27 +16,20 @@ TARGET_WIDTH = 480
 TARGET_HEIGHT = 800
 
 
-def render_html(tasks: list[dict], updated_at: datetime | None = None) -> str:
+def render_html(tasks: list[dict]) -> str:
     """
     Render HTML from tasks using Jinja2 template.
 
     Args:
         tasks: List of task dictionaries with 'content' key
-        updated_at: Timestamp for footer (default: now)
 
     Returns:
         Rendered HTML string
     """
-    if updated_at is None:
-        updated_at = datetime.now(JST)
-
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("board.html")
 
-    return template.render(
-        tasks=tasks,
-        updated_at=updated_at.strftime("%m.%d %H:%M"),
-    )
+    return template.render(tasks=tasks)
 
 
 def html_to_png(html_content: str, output_path: str | Path) -> None:
