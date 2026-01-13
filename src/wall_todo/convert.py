@@ -6,8 +6,8 @@ from PIL import Image
 UPLOADS_DIR = Path(__file__).parent.parent.parent / "uploads"
 IMAGES_DIR = Path(__file__).parent.parent.parent / "images"
 
-TARGET_WIDTH = 800
-TARGET_HEIGHT = 480
+TARGET_WIDTH = 480
+TARGET_HEIGHT = 800
 GRAYSCALE_LEVELS = 4  # e-paper supports 4 levels
 
 
@@ -46,7 +46,7 @@ def convert_image(input_path: Path, output_path: Path) -> None:
     """
     Convert a single image for e-paper display.
 
-    - Resize to fit 800x480 (scale up if smaller, scale down if larger)
+    - Resize to fit 480x800 (scale up if smaller, scale down if larger)
     - Maintain aspect ratio with letterboxing (white padding)
     - Convert to 4-level grayscale
 
@@ -56,7 +56,7 @@ def convert_image(input_path: Path, output_path: Path) -> None:
     """
     img = Image.open(input_path)
 
-    # Calculate scale to fit within 800x480 while maintaining aspect ratio
+    # Calculate scale to fit within 480x800 while maintaining aspect ratio
     scale_w = TARGET_WIDTH / img.width
     scale_h = TARGET_HEIGHT / img.height
     scale = min(scale_w, scale_h)

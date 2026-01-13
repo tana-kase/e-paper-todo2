@@ -1,7 +1,6 @@
 """HTML rendering and PNG conversion."""
 
 import io
-import shutil
 from pathlib import Path
 
 import fitz  # PyMuPDF
@@ -12,8 +11,8 @@ from weasyprint import HTML
 from .fallback import get_fallback_image
 
 TEMPLATE_DIR = Path(__file__).parent / "templates"
-TARGET_WIDTH = 800
-TARGET_HEIGHT = 480
+TARGET_WIDTH = 480
+TARGET_HEIGHT = 800
 
 
 def render_html(tasks: list[dict]) -> str:
@@ -70,7 +69,10 @@ def render_board(tasks: list[dict], output_path: str | Path) -> bool:
     if not tasks:
         fallback = get_fallback_image()
         if fallback:
-            shutil.copy(fallback, output_path)
+            # Resize fallback image to target dimensions
+            img = Image.open(fallback)
+            img_resized = img.resize((TARGET_WIDTH, TARGET_HEIGHT), Image.Resampling.LANCZOS)
+            img_resized.save(output_path)
             return False
         # No fallback available, render empty task list
     html = render_html(tasks)
