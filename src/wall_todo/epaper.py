@@ -36,7 +36,7 @@ def display_image(image_path: str | Path, force_full_refresh: bool = False) -> b
     Automatically performs full refresh every 5 minutes to prevent ghosting.
 
     Args:
-        image_path: Path to PNG image (480x800)
+        image_path: Path to PNG image (800x480)
         force_full_refresh: Force full refresh regardless of time
 
     Returns:
@@ -68,12 +68,11 @@ def display_image(image_path: str | Path, force_full_refresh: bool = False) -> b
             epd.Clear()
             print("Full refresh performed")
 
-        # Load and rotate image (480x800 portrait -> 800x480 landscape for display)
+        # Load and display image
         img = Image.open(image_path)
-        img_rotated = img.rotate(90, expand=True)
 
         # Display image
-        epd.display(epd.getbuffer(img_rotated))
+        epd.display(epd.getbuffer(img))
         epd.sleep()
 
         print(f"Displayed: {image_path}")

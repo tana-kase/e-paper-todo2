@@ -12,8 +12,8 @@ from weasyprint import HTML
 from .fallback import get_fallback_image
 
 TEMPLATE_DIR = Path(__file__).parent / "templates"
-TARGET_WIDTH = 480
-TARGET_HEIGHT = 800
+TARGET_WIDTH = 800
+TARGET_HEIGHT = 480
 
 
 def render_html(tasks: list[dict]) -> str:
