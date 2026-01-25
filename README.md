@@ -1,9 +1,8 @@
-![IMG_5306](https://github.com/user-attachments/assets/4b53d43e-2b79-44c6-b8a2-cdcfc8d49acb)
-
-
 # wall-todo
 
 Raspberry PiとE-Paperディスプレイで作る、壁掛けToDoボード。
+
+<img src="https://github.com/user-attachments/assets/f0be3290-f1ac-48a7-bca3-155f3c874861" width="50%" />
 
 ## これは何？
 
