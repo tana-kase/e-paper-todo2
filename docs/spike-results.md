@@ -240,7 +240,7 @@ fonts-noto-cjk
 ### CSS設定
 
 ```css
-font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif;
+font-family: 'Zen Kurenaido', 'Noto Serif CJK JP', serif;
 ```
 
 ## 3. Todoist API
@@ -285,8 +285,9 @@ tasks = response.json()
 |------|-----|
 | サイズ | 480x800px（縦長） |
 | フォーマット | PNG |
-| フォント | Noto Sans CJK JP |
-| 基本フォントサイズ | 20px |
+| フォント | Zen Kurenaido（採用決定） |
+| フォールバック | Noto Serif CJK JP |
+| 基本フォントサイズ | 24px |
 
 ## 5. まとめ：必要な依存関係
 
