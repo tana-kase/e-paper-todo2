@@ -1,6 +1,7 @@
 """Todoist API client for fetching tasks."""
 
 import os
+from datetime import date
 from dotenv import load_dotenv
 import requests
 
@@ -51,7 +52,12 @@ def get_today_tasks(api_key: str, limit: int = 10) -> list[dict]:
     Returns:
         List of task dictionaries
     """
-    tasks = [t for t in fetch_tasks(api_key, "today") if t.get("parent_id") is None]
+    today = date.today().isoformat()
+    tasks = [
+        t
+        for t in fetch_tasks(api_key, "today")
+        if t.get("parent_id") is None and t.get("due", {}).get("date") == today
+    ]
 
     def sort_key(task: dict) -> int:
         day = task.get("day_order", -1)
