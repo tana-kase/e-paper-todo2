@@ -34,7 +34,11 @@ def fetch_tasks(api_key: str, filter_query: str = "today") -> list[dict]:
             timeout=10,
         )
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+        print(f"[DEBUG] Response type: {type(data).__name__}")
+        print(f"[DEBUG] Response keys: {data.keys() if isinstance(data, dict) else 'N/A (list)'}")
+        print(f"[DEBUG] Response (first 1000 chars): {str(data)[:1000]}")
+        return data
     except (requests.RequestException, ValueError):
         return []
 
