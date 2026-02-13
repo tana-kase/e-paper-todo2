@@ -52,4 +52,10 @@ def get_today_tasks(api_key: str, limit: int = 10) -> list[dict]:
         List of task dictionaries
     """
     tasks = fetch_tasks(api_key, "today")
+
+    def sort_key(task: dict) -> int:
+        day = task.get("day_order", -1)
+        return day if day >= 0 else task.get("child_order", 0)
+
+    tasks.sort(key=sort_key)
     return tasks[:limit]
