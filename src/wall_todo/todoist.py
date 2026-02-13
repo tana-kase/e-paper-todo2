@@ -27,25 +27,15 @@ def fetch_tasks(api_key: str, filter_query: str = "today") -> list[dict]:
         return []
 
     try:
-        print(f"[DEBUG] Fetching tasks with filter='{filter_query}'")
         response = requests.get(
-            "https://api.todoist.com/rest/v2/tasks",
+            "https://api.todoist.com/api/v1/tasks",
             params={"filter": filter_query},
             headers={"Authorization": f"Bearer {api_key}"},
             timeout=10,
         )
-        print(f"[DEBUG] Response status: {response.status_code}")
-        print(f"[DEBUG] Response body (first 500 chars): {response.text[:500]}")
         response.raise_for_status()
-        data = response.json()
-        print(f"[DEBUG] Parsed {len(data)} tasks, type={type(data).__name__}")
-        return data
-    except requests.RequestException as e:
-        print(f"[DEBUG] RequestException: {e}")
-        return []
-    except ValueError as e:
-        print(f"[DEBUG] ValueError: {e}")
-        print(f"[DEBUG] Response text was: {response.text[:500]}")
+        return response.json()
+    except (requests.RequestException, ValueError):
         return []
 
 
