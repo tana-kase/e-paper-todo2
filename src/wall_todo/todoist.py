@@ -56,7 +56,7 @@ def get_today_tasks(api_key: str, limit: int = 10) -> list[dict]:
     tasks = [
         t
         for t in fetch_tasks(api_key, "today")
-        if t.get("parent_id") is None and t.get("due", {}).get("date") == today
+        if t.get("parent_id") is None and (t.get("due") or {}).get("date") == today
     ]
 
     def sort_key(task: dict) -> int:
