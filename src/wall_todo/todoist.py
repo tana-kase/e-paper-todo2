@@ -51,7 +51,7 @@ def get_today_tasks(api_key: str, limit: int = 10) -> list[dict]:
     Returns:
         List of task dictionaries
     """
-    tasks = fetch_tasks(api_key, "today")
+    tasks = [t for t in fetch_tasks(api_key, "today") if t.get("parent_id") is None]
 
     def sort_key(task: dict) -> int:
         day = task.get("day_order", -1)
