@@ -27,18 +27,15 @@ def fetch_tasks(api_key: str, filter_query: str = "today") -> list[dict]:
     if not api_key:
         return []
 
-    try:
-        response = requests.get(
-            "https://api.todoist.com/api/v1/tasks",
-            params={"filter": filter_query},
-            headers={"Authorization": f"Bearer {api_key}"},
-            timeout=10,
-        )
-        response.raise_for_status()
-        data = response.json()
-        return data.get("results", []) if isinstance(data, dict) else data
-    except (requests.RequestException, ValueError):
-        return []
+    response = requests.get(
+        "https://api.todoist.com/api/v1/tasks",
+        params={"filter": filter_query},
+        headers={"Authorization": f"Bearer {api_key}"},
+        timeout=10,
+    )
+    response.raise_for_status()
+    data = response.json()
+    return data.get("results", []) if isinstance(data, dict) else data
 
 
 def get_today_tasks(api_key: str, limit: int = 10) -> list[dict]:

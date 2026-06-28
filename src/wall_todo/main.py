@@ -52,7 +52,11 @@ def main() -> None:
         print("Error: API_KEY not set in .env")
         return
 
-    tasks = get_today_tasks(api_key)
+    try:
+        tasks = get_today_tasks(api_key)
+    except Exception as e:
+        print(f"タスク取得エラー（スキップ）: {e}")
+        return
 
     # Check if tasks have changed
     cached_tasks = load_cached_tasks()
