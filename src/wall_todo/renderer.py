@@ -11,24 +11,16 @@ from weasyprint import HTML
 from .fallback import get_fallback_image
 
 TEMPLATE_DIR = Path(__file__).parent / "templates"
+FONTS_DIR = Path(__file__).parent.parent.parent / "fonts"
 TARGET_WIDTH = 480
 TARGET_HEIGHT = 800
 
 
 def render_html(tasks: list[dict]) -> str:
-    """
-    Render HTML from tasks using Jinja2 template.
-
-    Args:
-        tasks: List of task dictionaries with 'content' key
-
-    Returns:
-        Rendered HTML string
-    """
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("board.html")
 
-    return template.render(tasks=tasks)
+    return template.render(tasks=tasks, fonts_dir=FONTS_DIR.resolve())
 
 
 def html_to_png(html_content: str, output_path: str | Path) -> None:

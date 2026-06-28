@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        @font-face {
+            font-family: 'BIZ UDPGothic';
+            src: url('file://{{ fonts_dir }}/BIZUDPGothic-Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
         @page {
             size: 480px 800px;
             margin: 0;
@@ -13,7 +18,8 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Zen Kurenaido', 'Noto Serif CJK JP', serif;
+            font-family: 'BIZ UDPGothic', 'Noto Sans CJK JP', sans-serif;
+            font-weight: bold;
             font-size: 24px;
             background: white;
             width: 480px;
